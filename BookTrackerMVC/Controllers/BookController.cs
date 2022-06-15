@@ -23,5 +23,45 @@ namespace BookTrackerMVC.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Book obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Book.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");           
+            }
+            return View(obj);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Book.Find(id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditPost(Book obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Book.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
     }
 }

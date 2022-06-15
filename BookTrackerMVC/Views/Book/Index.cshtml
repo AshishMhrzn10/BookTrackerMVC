@@ -43,8 +43,8 @@
                                 @item.ISBN
                             </td>
                             <td>
-                               <button class="btn btn-danger btn-sm">Delete</button>
-                                <a class="btn btn-success btn-sm text-white">Edit</a>
+                                <button asp-controller="Book" asp-route-Id="@item.Id" asp-action="Edit" class="btn btn-success btn-sm text-white">Edit</button>
+                                <button asp-controller="Book" asp-route-Id="@item.Id" asp-action="Delete"  class="btn btn-danger btn-sm">Delete</button>
                             </td>
                         </tr>
                     }

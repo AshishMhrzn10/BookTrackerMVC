@@ -1,10 +1,10 @@
 ﻿@model Book
 
-<h2 class="text-info">Create New Book</h2>
+<h2 class="text-info">Update Book</h2>
 
 <div class="border container" style="padding:30px;">
-    <form method="post" asp-action="Create">
-        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <form method="post" asp-action="EditPost">
+        <input type="hidden" asp-for="Id" />
         <div class="form-group row mb-3">
             <div class="col-3">
                 <label asp-for="Name"></label>
@@ -37,7 +37,7 @@
 
         <div class="form-group row">
             <div class="col-3 offset-3">
-                <input type="submit" value="Create" class="btn btn-primary form-control"/>
+                <input type="submit" value="Update" class="btn btn-primary form-control"/>
             </div>
             <div class="col-3">
                 <a asp-action="Index" class="btn btn-success form-control">Back to List</a>

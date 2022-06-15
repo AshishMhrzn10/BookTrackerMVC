@@ -91,5 +91,15 @@ namespace BookTrackerMVC.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
     }
 }

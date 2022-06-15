@@ -26,7 +26,7 @@ namespace BookTrackerMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Book obj)
+        public IActionResult CreatePost(Book obj)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +62,34 @@ namespace BookTrackerMVC.Controllers
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Book.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _db.Book.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Book.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

@@ -3,8 +3,9 @@
 <h2 class="text-info">Update Book</h2>
 
 <div class="border container" style="padding:30px;">
-    <form method="post" asp-action="EditPost">
+    <form method="post" asp-controller="Book" asp-action="EditPost">
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="userId"  />
         <div class="form-group row mb-3">
             <div class="col-3">
                 <label asp-for="Name"></label>

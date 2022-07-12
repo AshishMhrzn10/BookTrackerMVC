@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BookTrackerMVC.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookTrackerMVC.Models
 {
@@ -11,5 +13,6 @@ namespace BookTrackerMVC.Models
         public string Name { get; set; }
         public string Author { get; set; }
         public string ISBN { get; set; }
+        public string userId { get; set; }
     }
 }

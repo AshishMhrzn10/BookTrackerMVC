@@ -1,22 +1,31 @@
-﻿using BookTrackerMVC.Data;
+﻿using BookTrackerMVC.Areas.Identity.Data;
+using BookTrackerMVC.Data;
 using BookTrackerMVC.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookTrackerMVC.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
 
         private readonly ApplicationDbContext _db;
+        public BookTrackerMVCContext context;
+        public readonly UserManager<AuthUser> userManager;
 
-        public BookController(ApplicationDbContext db)
+        public BookController(ApplicationDbContext _db, BookTrackerMVCContext context, UserManager<AuthUser> userManager )
         {
-            _db = db;
+            this._db = _db;
+            this.context = context;
+            this.userManager = userManager;
         }
         public IActionResult Index()
         {
             IEnumerable<Book> objList = _db.Book;
-            return View(objList);
+            var filteredList = objList.Where(item => item.userId == userManager.GetUserId(User));
+            return View(filteredList);
         }
 
         public IActionResult Create()
@@ -26,15 +35,13 @@ namespace BookTrackerMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreatePost(Book obj)
+        public async Task<IActionResult> Create(Book obj)
         {
-            if (ModelState.IsValid)
-            {
+           
                 _db.Book.Add(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");           
-            }
-            return View(obj);
+           
         }
 
         public IActionResult Edit(int? id)
@@ -53,15 +60,11 @@ namespace BookTrackerMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditPost(Book obj)
+        public async Task<IActionResult> EditPost(Book obj)
         {
-            if (ModelState.IsValid)
-            {
                 _db.Book.Update(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
-            }
-            return View(obj);
         }
 
         public IActionResult Delete(int? id)

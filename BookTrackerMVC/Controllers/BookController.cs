@@ -37,11 +37,9 @@ namespace BookTrackerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Book obj)
         {
-           
                 _db.Book.Add(obj);
                 await _db.SaveChangesAsync();
-                return RedirectToAction("Index");           
-           
+                return RedirectToAction("Index");                    
         }
 
         public IActionResult Edit(int? id)
